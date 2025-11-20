@@ -31,13 +31,15 @@ public class TraversalTree {
      */
     private void inorderTraversal(BinaryNode<String> node) {
         if (node != null) {
-            System.out.println("go left");
+            System.out.println("at node: " + node.getData() );
+            System.out.println("down left from " + node.getData());
             inorderTraversal(node.getLeftChild());
-            System.out.println("visit: " + node.getData());
-            System.out.println("go right");
+            System.out.println("go up");
+            System.out.println("***** visit: " + node.getData() + " *****");
+            System.out.println("down right from " + node.getData());
             inorderTraversal(node.getRightChild());
         } else {
-            System.out.println("hit null");
+            System.out.println("null go up");
         }
     }
 
@@ -47,29 +49,32 @@ public class TraversalTree {
 
     private void preorderTraversal(BinaryNode<String> node) {
         if (node != null) {
-            System.out.println("visit: " + node.getData());
-            System.out.println("go left");
+            System.out.println("at node: " + node.getData() );
+            System.out.println("***** visit: " + node.getData() + " *****");
+            System.out.println("down left from " + node.getData());
             preorderTraversal(node.getLeftChild());
-            System.out.println("go right");
+            System.out.println("down right from " + node.getData());
             preorderTraversal(node.getRightChild());
         } else {
-            System.out.println("hit null");
+            System.out.println("null go up");
         }
     }
     public void postorderTraversal() {
         postorderTraversal(root);
     }   
     private void postorderTraversal(BinaryNode<String> node) {
+    
         if (node != null) {
-            System.out.println("go left");
+            System.out.println("at node: " + node.getData() );
+            System.out.println("down left from " + node.getData());
             postorderTraversal(node.getLeftChild());
-            System.out.println("go right");
+            System.out.println("down right from " + node.getData());
             postorderTraversal(node.getRightChild());
+            System.out.println("***** visit: " + node.getData() + " *****");
             System.out.println("go up");
-            System.out.println("visit: " + node.getData());
             
         } else {
-            System.out.println("hit null");
+            System.out.println("null go up");
         }
     }
     /** displays the tree structure 
@@ -90,7 +95,7 @@ public class TraversalTree {
         int largestLevel = 0;
         int spacing = 0;
         String spaces = " ";
-
+        //traverse to find largest level for spacing
         while (!queue.empty()) {
             int levelSize = queue.size();
             if(levelSize > largestLevel) {
@@ -107,13 +112,18 @@ public class TraversalTree {
             }
            
         }
+        //reset queue for actual display    
+        queue = new LinkedQueue<>();
+        //restart bfs from root
         queue.offer(root);
 
         while (!queue.empty()) {
             int levelSize = queue.size();
-            spacing = largestLevel / levelSize;
+           // System.out.print("Level " + levelSize + ": ");
+           // System.out.println( "Largest level size for spacing: " + largestLevel);
+            spacing = 2 * (largestLevel +1)/levelSize;
 
-
+           // System.out.println("Spacing: " + spacing);
             for (int i = 0; i < levelSize; i++) {
                 BinaryNode<String> node = queue.poll();
                 System.out.print(spaces.repeat(spacing) + node.getData() + spaces.repeat(spacing));
